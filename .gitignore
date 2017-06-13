@@ -1,0 +1,4 @@
+node_modules/
+public/
+variables.env
+webpack.config.js
