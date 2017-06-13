@@ -1,6 +1,32 @@
 const mongoose =require('mongoose');
 var Store = mongoose.model('Store');
 
+/** 
+ * 'multer'. about file upload ( to server's memery), check ref:
+ * https://github.com/expressjs/multer/blob/master/doc/README-zh-cn.md
+ */ 
+const multer = require('multer'); 
+
+/**
+ * 'jimp'. abount photo resize, check ref:
+ * https://www.npmjs.com/package/jimp
+ */
+const jimp = require('jimp');
+const uuid = require('uuid');
+
+
+const multerOptions = {
+    storage: multer.memoryStorage(),
+    fileFilter(req, file, next) {
+        const isPhoto = file.mimetype.startsWith('image/');
+        if (isPhoto) {
+            next(null, true);
+        } else {
+            next({message: 'This filetype isn\'t allowed!'}, false);
+        }
+    }
+}
+
 
 exports.homePage = (req,res) => {
     res.render('index');
@@ -8,6 +34,27 @@ exports.homePage = (req,res) => {
 
 exports.addStore = (req, res) => {
     res.render('editStore', {title: 'Add Store'});
+}
+
+//read into server's memory (not disk)
+exports.upload = multer(multerOptions).single('photo');
+
+exports.resize = async (req, res, next) => {
+    // check if there's no new file to resize
+    if (!req.file) {
+        next();
+        return;
+    }
+    // console.log(req.file);
+    const filetype = req.file.mimetype.split('/')[1];
+    req.body.photo = `${uuid.v4()}.${filetype}`;
+    // do resize
+    const photo = await jimp.read(req.file.buffer);
+    await photo.resize(800, jimp.AUTO);
+    await photo.write(`./public/uploads/${req.body.photo}`); //How do you know to write where?
+
+    // once we have written the photo to filesystem, keep going!
+    next();
 }
 
 exports.createStore = async (req, res) => {
@@ -34,7 +81,7 @@ exports.editStore = async (req, res) => {
 
 exports.updateStore = async (req, res) => {
     // set the location data to be a point.
-    req.body.location.type = 'point';
+    req.body.location.type = 'Point';
     
     // find and update the store
     const store = await Store.findOneAndUpdate({_id: req.params.id},
