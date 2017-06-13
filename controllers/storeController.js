@@ -93,40 +93,10 @@ exports.updateStore = async (req, res) => {
     res.redirect(`/stores/${store._id}/edit`);
 }
 
-// module.exports = {
-//     homePage: (req, res) => {
-//         res.render('index');
-//     },
-
-//     addStore: (req, res) => {
-//         res.render('editStore', {title: 'Add Store'});
-//     },
-    
-//     // createStore: (req, res) => {
-//     //     const store = new Store(req.body);
-//     //     store.save()
-//     //         .then(sotre => res.json(sotre))
-//     //         .catch(err => {
-//     //             throw Error(err);  /*res.send(err)*/
-//     //         });
-//     // },
-
-//     // createStore: async (req, res) => {
-//     //     try {
-//     //         const store = new Store(req.body);
-//     //         await store.save();
-//     //         console.log("Store saved !");
-//     //     } catch(err) {
-//     //         throw Error(err);   /*res.send(err)*/
-//     //     }
-//     // }
-
-//     createStore: async (req, res) => {
-//         //But you can do better, using 'errorHandlers.js'
-//         const store = new Store(req.body);
-//         await store.save();
-//         req.flash('success', `Successfully Created ${store.name}. Care to leave a review?`);
-//         // console.log("Store saved !");
-//         res.redirect(`/store/${store.slug}`);
-//     }
-// }
+exports.getStoreBySlug = async (req, res, next) => {
+    const store = await Store.findOne({slug: req.params.slug});
+    if (!store) {
+        return next();
+    }
+    res.render('store', { store });
+}
