@@ -1,3 +1,7 @@
 node_modules/
 variables.env
+public/dist/
+public/fonts/
+public/images/
+public/uploads/
 webpack.config.js
