@@ -18,7 +18,9 @@ var userSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: 'Please Supply a Name'
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 });
 
 /**

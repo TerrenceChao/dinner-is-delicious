@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    .inner
+        h2= title
+        //- It will redirect to the same URL if form doesn't have 'action' like bellow: 
+        form(method="POST")
+            label(for="password") Password
+            input(type="password" name="password")
+            label(for="password-confirm") Confirm Password
+            input(type="password" name="password-confirm")
+            input.button(type="submit" value="Reset Password")
