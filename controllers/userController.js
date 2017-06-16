@@ -64,3 +64,22 @@ exports.register = async (req, res, next) => {
     // res.send('It works');
     next();
 };
+
+exports.account = (req, res) => {
+    res.render('account', {title: 'Edit Your Account'});
+}
+
+exports.updateAccount = async (req, res) => {
+    const updates = {
+        name: req.body.name,
+        email: req.body.email
+    }
+
+    const user = await User.findOneAndUpdate(
+        {_id: req.user._id}, // check 'app.js' line 58: res.locals.user = req.user || null;
+        { $set: updates },
+        { new: true, runValidators: true, context: 'query'  } //  What is "context: 'query'" ????
+    );
+    // res.json(user);
+    res.redirect('back');
+}
