@@ -22,6 +22,15 @@ var userSchema = new mongoose.Schema({
 });
 
 /**
+ * Don't use the personal icon for temporarily. 
+ */
+// userSchema.virtual('gravatar').get(() => {
+//     const hash = md5(this.email);
+//     return `https://gravatar.com/avatar/${hash}?s=200`;
+// });
+
+
+/**
  * You can test it if there's no 'mongodbErrorHandler'.
  * The error caused by "unique" attribute is mess,
  * you can use 'mongodbErrorHandler' to make err msg
