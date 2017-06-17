@@ -41,6 +41,12 @@ const storeSchema = new mongoose.Schema({
     }
 });
 
+// Define our indexes
+storeSchema.index({
+    name: 'text',
+    description: 'text'
+})
+
 // https://developers.redhat.com/blog/2016/11/09/node-7-and-promise-rejections-please-handle-them/
 storeSchema.pre('save', async function(next) {
     if (!this.isModified('name')) {

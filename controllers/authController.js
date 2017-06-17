@@ -10,7 +10,7 @@ exports.login = passport.authenticate('local'/* facebook / twitter, ...*/, {
     failureRedirect: '/login',
     failureFlash: 'Failed Login!',
     successRedirect: '/',
-    successFlash: 'You are new logged in!' 
+    successFlash: 'You are now logged in!' 
 }); 
 
 exports.logout = (req, res) => {
