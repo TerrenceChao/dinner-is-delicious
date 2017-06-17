@@ -4,9 +4,11 @@ mixin storeCard(store = {})
         .store__hero
             .store__actions
                 //-     button soon
-                .store__action.store__action--edit
-                    a(href=`/stores/${store._id}/edit`)
-                        != h.icon('pencil')
+                //- pre= h.dump(store.author)
+                if user && store.author.equals(user._id)
+                    .store__action.store__action--edit
+                        a(href=`/stores/${store._id}/edit`)
+                            != h.icon('pencil')
 
             //- Why the "img src" bellow could points to /uploads/store.png??
             img(src=`/uploads/${store.photo || 'store.png'}`)

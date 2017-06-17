@@ -7,10 +7,7 @@ const { catchErrors } = require('../handlers/errorHandlers');
 
 router.get('/', catchErrors(storeController.getSotres));
 router.get('/stores', catchErrors(storeController.getSotres));
-router.get('/add', 
-    authController.isLoggedIn,
-    storeController.addStore
-);
+router.get('/add', authController.isLoggedIn, storeController.addStore);
 
 router.post('/add/:id', 
     storeController.upload,
