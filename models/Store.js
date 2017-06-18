@@ -22,7 +22,8 @@ const storeSchema = new mongoose.Schema({
     location:{
         type: {
             type: String,
-            default: 'Point'
+            default: 'Point',
+            // index: '2d'
         },
         coordinates: [{
             type: Number,
@@ -45,7 +46,11 @@ const storeSchema = new mongoose.Schema({
 storeSchema.index({
     name: 'text',
     description: 'text'
-})
+});
+
+storeSchema.index({
+    location: '2dsphere'
+});
 
 // https://developers.redhat.com/blog/2016/11/09/node-7-and-promise-rejections-please-handle-them/
 storeSchema.pre('save', async function(next) {
