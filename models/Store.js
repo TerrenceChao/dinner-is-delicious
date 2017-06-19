@@ -29,7 +29,7 @@ const storeSchema = new mongoose.Schema({
             type: Number,
             required: 'You must supply coordinates!'
         }],
-        address:{
+        address: {
             type: String,
             required: 'You must supply an address!'
         }

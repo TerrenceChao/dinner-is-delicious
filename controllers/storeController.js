@@ -139,12 +139,16 @@ exports.mapStores = async (req, res) => {
                     type: 'Point',
                     coordinates
                 },
-                $maxDistance: 10000 //10km
+                $maxDistance: 20000000 //2000km
             }
         }
     };
     
-    const stores = await Store.find(query).select('slug name description location'); // .limiet(10);
+    const stores = await Store.find(query).select('slug name description location photo'); //.limit(10);
     res.json(stores);
+}
+
+exports.mapPage = (req, res) => {
+    res.render('map', {title: 'Map'});
 }
 
