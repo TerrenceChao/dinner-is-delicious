@@ -20,7 +20,11 @@ var userSchema = new mongoose.Schema({
         required: 'Please Supply a Name'
     },
     resetPasswordToken: String,
-    resetPasswordExpires: Date
+    resetPasswordExpires: Date,
+    hearts: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'Store'
+    }]
 });
 
 /**

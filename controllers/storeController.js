@@ -1,5 +1,6 @@
 const mongoose =require('mongoose');
 var Store = mongoose.model('Store');
+var User = mongoose.model('User');
 
 /** 
  * 'multer'. about file upload ( to server's memery), check ref:
@@ -150,5 +151,16 @@ exports.mapStores = async (req, res) => {
 
 exports.mapPage = (req, res) => {
     res.render('map', {title: 'Map'});
+}
+
+exports.heartStore = async (req, res) => {
+    const hearts = req.user.hearts.map(heart => heart.toString());
+    const operator = hearts.includes(req.params.id) ? '$pull' : '$addToSet';
+    const heart = await User
+        .findByIdAndUpdate(req.user._id,
+            { [operator]: { hearts: req.params.id } },
+            { new: true }
+        );
+    res.json(heart);
 }
 
