@@ -2,7 +2,11 @@ import axios from 'axios';
 import { $ } from './bling';
 
 function ajaxHeart(e) {
+    
+    // this line is the reason why the POST method doesn't work.
     e.preventDefault();
+
+
     console.log("Heart Itt!!!!");
     console.log(this); // this = heartForms, check 'heart.js'
 

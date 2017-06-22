@@ -156,12 +156,12 @@ exports.mapPage = (req, res) => {
 exports.heartStore = async (req, res) => {
     const hearts = req.user.hearts.map(heart => heart.toString());
     const operator = hearts.includes(req.params.id) ? '$pull' : '$addToSet';
-    const heart = await User
+    const user = await User
         .findByIdAndUpdate(req.user._id,
             { [operator]: { hearts: req.params.id } },
             { new: true }
         );
-    res.json(heart);
+    res.json(user);
 }
 
 exports.getHearts = async (req, res) => {
